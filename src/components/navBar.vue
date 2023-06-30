@@ -13,22 +13,14 @@
 </template>
 
 <script setup>
-import axios from "axios";
 import { onMounted, ref } from "vue";
+import getFromBD from '../scripts'
 
 let destinationData = ref();
 
-onMounted (()=>{
-    response();
+onMounted (async ()=>{
+    destinationData.value = await getFromBD();
 });
-
-async function response(){
-    const responseDestination = await axios.get('http://localhost:3000/destinations');
-
-    destinationData.value = responseDestination.data;
-
-    console.log(destinationData.value);
-}
 
 
 </script>

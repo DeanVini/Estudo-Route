@@ -1,6 +1,6 @@
 <template>
-    <div class="ele-ta-sem-zap">
-    <div  class="destinaion-container">
+    <div>
+        <div  class="destinaion-container">
             <router-link v-for="(destination) in destinations" :key="destination.id" :to="`/${destination.slug}`">
                 <div class= "infos-container">
                     <img :src="`../../images/${destination.image}`" alt="">
@@ -15,21 +15,16 @@
 </template>
 
 <script setup>
-import axios from 'axios';
 import { onMounted, ref } from "vue";
+import getFromBD from '../scripts.js';
 
 let destinations = ref();
 
-onMounted(() => {
-    getDestinations();
+onMounted(async () => {
+    destinations.value = await getFromBD();
 })
 
-async function getDestinations(){
-    const response = await axios.get('http://localhost:3000/destinations');
-    destinations.value = response.data; 
 
-    console.log(destinations.value);
-}
 </script>
 
 <style scoped>
@@ -47,8 +42,6 @@ async function getDestinations(){
     
 }
 
-.ele-ta-sem-zap{
-}
 
 .destinaion-container .infos-container{
     display: flex;
